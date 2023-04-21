@@ -94,15 +94,15 @@ public final class Libro {
         }
         
         // 2.2.2.Cantidad en biblioteca debeser mayor a cero
-        if (getCant_biblioteca() >= 0) {
+        if (getCant_biblioteca() <= 0) {
             throw new IOException("La cantidad en la biblioteca "
                     + "debe ser mayor a 0");
         }
         
         // 2.2.3.Cantidad disponible debe ser mayor a cero y menor o igual a 
         // cantidad en biblioteca.
-        if (getCant_disponible() >= 0 
-                || getCant_disponible() > getCant_biblioteca()) {
+        if (getCant_disponible() <= 0 
+                || getCant_disponible() < getCant_biblioteca()) {
             throw new IOException("La cantidad disponible debe ser mayor "
                     + "o igual a 0 y menor o igual a la cantidad en la "
                     + "biblioteca");
@@ -117,6 +117,20 @@ public final class Libro {
         
         FileWriter archivoEscritura = new FileWriter(nombreArchivo);
         
+        Scanner lector = new Scanner(archivo);
+        String line;
+        
+        while ((line = lector.nextLine()) != null) {
+            
+        }
+        
+        // RECORREMOS CADA LÍNEA GUARDADA
+        for (int i = 0; i < libros.size(); i++) {
+            // OBRTENEMOS EL FORMATO CSV
+            String linea = libros.get(i).toCSV();
+            // ESCRIBIMOS EN EL ARCHIVO
+            archivoEscritura.write(linea + "\n");
+        }
         archivoEscritura.write(this.toCSV() + "\n");
         
         // CERRAMOS EL ARCHIVO
