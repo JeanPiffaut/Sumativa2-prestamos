@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.Scanner;
 
 /**
@@ -108,13 +109,21 @@ public class AppLibreria {
             // OBTENGO EL VALOR DE LA LÍNEA
             String linea = lector.nextLine();
             String cortado[] = linea.split(";");
+            
             // OBTENGO EL ISBN DEL LIBRO
             int ISBN = Integer.parseInt(cortado[0]);
-            // DDECLARO LA VARIABLE PARA GUARDAR EL USUARIO
-            Libro obj = new Libro(ISBN);
+            String titulo = cortado[1];
+            String autor = cortado[2];
+            int cant_biblioteca = Integer.parseInt(cortado[3]);
+            int cant_disponible = Integer.parseInt(cortado[4]);
+            boolean imagen = Boolean.parseBoolean(cortado[5]);
+            
+            // DECLARO LA VARIABLE PARA GUARDAR EL USUARIO
+            Libro obj = new Libro(ISBN, titulo, autor, cant_biblioteca, cant_disponible, imagen);
             
             libros.add(obj);
         }
+        
         // CERRAMOS EL ARCHIVO PARA LIBERAR MEMORIA
         lector.close();
         
