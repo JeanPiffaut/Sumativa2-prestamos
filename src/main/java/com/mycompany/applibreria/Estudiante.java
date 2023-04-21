@@ -8,17 +8,36 @@ package com.mycompany.applibreria;
  *
  * @author Tom
  */
-public class Estudiante extends Usuario {
+public final class Estudiante extends Usuario {
+    private String carrera;
+    
     // GENERAMOS DATOS DE USUARIOS BASE
-    public Estudiante(String RUN, String nombreCompleto, int ISBN) {
-        super(RUN, nombreCompleto, ISBN);
+    public Estudiante(String RUN, String nombreCompleto, boolean conPrestamo, String carrera) {
+        super(RUN, nombreCompleto,conPrestamo);
+        setCarrera(carrera);
     }
     
-    @Override
+    /**
+     * @return the carrera
+     */
+    public String getCarrera() {
+        return carrera;
+    }
+
+    /**
+     * @param carrera the carrera to set
+     */
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+    
+      @Override
     public String toCSV() {
         // AGREGAR LOS ATRIBUTOS ADICIONALES SEPARADOS POR ;
         // Y UTILIZO COMO BASE EL MÉTODO DE MI HERENCIA
         // "estudiante;" + "1-1;Tomás S;0" = > estudiante;1-1;Tomás S;0
         return "estudiante;" + super.toCSV();
     }
+
+    
 }

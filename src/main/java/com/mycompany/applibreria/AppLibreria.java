@@ -20,8 +20,8 @@ import java.util.Scanner;
 public class AppLibreria {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         // NOMBRE DE LOS ARCHIVOS
-        final String archivoUsuarios = "usuarios.csv";
-        final String archivoLibros = "libros.csv";
+        final String archivoUsuarios    = "usuarios.csv";
+        final String archivoLibros      = "libros.csv";
         // GENERAMOS DATOS DE USUARIOS BASE
         ArrayList<Usuario> usuarios = cargarUsuarios(archivoUsuarios);
         // GENERAMOS DATOS DE LIBROS BASE
@@ -67,13 +67,19 @@ public class AppLibreria {
             // OBTENGO EL NOMBRE DEL USUARIO
             String nombreCompleto = cortado[2];
             // OBTENGO EL ISBN DEL USUARIO
-            int ISBN = Integer.parseInt(cortado[3]);
+            int conPrestamo = Integer.parseInt(cortado[3]);
             // DDECLARO LA VARIABLE PARA GUARDAR EL USUARIO
+            String carrera = cortado[4];
+            
+            boolean magister = cortado[5];
+            
+            boolean doctor = cortado[6];
+            
             Usuario obj;
             if (tipo == "docente") {
-                obj = new Docente(run, nombreCompleto, ISBN);
+                obj = new Docente(run, nombreCompleto, conPrestamo, carrera, magister, doctor );
             } else {
-                obj = new Estudiante(run, nombreCompleto, ISBN);
+                obj = new Estudiante(run, nombreCompleto, conPrestamo);
             }
             usuarios.add(obj);
         }

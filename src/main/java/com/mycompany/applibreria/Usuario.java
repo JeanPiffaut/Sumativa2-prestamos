@@ -11,12 +11,12 @@ package com.mycompany.applibreria;
 public abstract class Usuario {
     private String RUN;
     private String nombreCompleto;
-    private int ISBN;
+    private boolean conPrestamo;
     
-    public Usuario(String RUN, String nombreCompleto, int ISBN) {
+    public Usuario(String RUN, String nombreCompleto, boolean conPrestamo) {
         setRUN(RUN);
         setNombreCompleto(nombreCompleto);
-        setISBN(ISBN);
+        setConPrestamo(conPrestamo);
     }
     
     /**
@@ -48,23 +48,23 @@ public abstract class Usuario {
     }
 
     /**
-     * @return the ISBN
+     * @return the conPrestamo
      */
-    public int getISBN() {
-        return ISBN;
+    public boolean isConPrestamo() {
+        return conPrestamo;
     }
 
     /**
-     * @param ISBN the ISBN to set
+     * @param conPrestamo the conPrestamo to set
      */
-    public void setISBN(int ISBN) {
-        this.ISBN = ISBN;
+    public void setConPrestamo(boolean conPrestamo) {
+        this.conPrestamo = conPrestamo;
     }
     
     public String toCSV() {
         // AGREGAR LOS ATRIBUTOS ADICIONALES SEPARADOS POR ;
         // 1-1;Tomás S;1
         
-        return getRUN() + ";" + getNombreCompleto() + ";" + getISBN();
+        return getRUN() + ";" + getNombreCompleto();
     }
 }

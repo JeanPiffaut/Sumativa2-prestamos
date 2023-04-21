@@ -1,7 +1,7 @@
-﻿tipo;rut;nombre completo;ISBN
-estudiante;1-1;Tomás S;0
-estudiante;1-2;Fernando O;1
-estudiante;1-3;Juan S;0
-estudiante;2-1;Alberto C;0
-estudiante;2-2;Javier E;0
-estudiante;2-3;Felipe R;0
+﻿Tipo;RUT;Nombre Completo;ISBN;Carrera;Magister;Doctor
+Docente;01-ene;Tomás S;0;;1;0
+Docente;01-feb;Fernando O;5;;1;1
+Docente;01-mar;Juan S;0;;1;1
+Estudiante;02-ene;Alberto C;0;Tiktoker;0;0
+Estudiante;02-feb;Javier E;0;Informatica;0;0
+Estudiante;02-mar;Felipe R;0;Veterinaria;0;0

@@ -132,9 +132,6 @@ public class Prestamo {
         // DEJAMOS AL USUARIO NO DISPONIBLE PARA EL NUEVO PRÉSTAMO
         // 
         
-        // CAMBIO EL ISBN DEL USUARIO
-        usuario.setISBN(libro.getISBN());
-        
         // RETORNAMOS EL PRÉSTAMO VALIDADO
         return prestamo;
     }
