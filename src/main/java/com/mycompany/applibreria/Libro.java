@@ -8,30 +8,83 @@ package com.mycompany.applibreria;
  *
  * @author Tom
  */
-public class Libro {
+public final class Libro {
     private int ISBN;
+    private String titulo;
+    private String autor;
+    private int cant_biblioteca;
+    private int cant_disponible;
+    private boolean imagen;
     
     // DEBE COMPLETAR ESTE CONSTRUCTOR
-    public Libro(int ISBN) {
+    public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, int cant_disponible, boolean imagen) {
         setISBN(ISBN);
+        setTitulo(titulo);
+        setAutor(autor);
+        setCant_biblioteca(cant_biblioteca);
+        setCant_disponible(cant_disponible);
+        setImagen(imagen);
     }
     
-    /**
-     * @return the ISBN
-     */
     public int getISBN() {
         return ISBN;
     }
-
-    /**
-     * @param ISBN the ISBN to set
-     */
+    
     public void setISBN(int ISBN) {
         this.ISBN = ISBN;
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public int getCant_biblioteca() {
+        return cant_biblioteca;
+    }
+
+    public void setCant_biblioteca(int cant_biblioteca) {
+        this.cant_biblioteca = cant_biblioteca;
+    }
+
+    public int getCant_disponible() {
+        return cant_disponible;
+    }
+
+    public void setCant_disponible(int cant_disponible) {
+        this.cant_disponible = cant_disponible;
+    }
+
+    public boolean isImagen() {
+        return imagen;
+    }
+
+    public void setImagen(boolean imagen) {
+        this.imagen = imagen;
+    }
+    
+    public void CrearLibro() {
+        
+    }
+    
+    public void EliminarLibro() {
+        
+    }
     
     public String toCSV() {
-        // AGREGAR LOS ATRIBUTOS ADICIONALES SEPARADOS POR ;
-        return "" + getISBN();
+        return getISBN() + ";" + getTitulo() + ";" + getAutor() 
+                + ";" + getCant_biblioteca() + ";" + getCant_disponible() 
+                + ";" + isImagen();
     }
 }
