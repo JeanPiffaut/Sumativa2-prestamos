@@ -4,6 +4,12 @@
  */
 package com.mycompany.applibreria;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author Tom
@@ -17,7 +23,8 @@ public final class Libro {
     private boolean imagen;
     
     // DEBE COMPLETAR ESTE CONSTRUCTOR
-    public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, int cant_disponible, boolean imagen) {
+    public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, 
+            int cant_disponible, boolean imagen) {
         setISBN(ISBN);
         setTitulo(titulo);
         setAutor(autor);
@@ -74,8 +81,46 @@ public final class Libro {
         this.imagen = imagen;
     }
     
-    public void CrearLibro() {
+    public void CrearLibro(ArrayList<Libro> libros) throws IOException {
+        // 2.2.1.El ISBN debe ser único.
+        for (int i = 0; i < libros.size(); i++) {
+            // VOY OBTENIENDO CADA LIBRO EN EL ARREGLO DE LIBROS
+            Libro libro = libros.get(i);
+            
+            // PREGUNTO SI EL ISBN DEL LIBRO ES IGUAL AL LIBRO QUE BUSCO
+            if (libro.getISBN() == getISBN()) {
+                throw new IOException("El ISBN ya existe");
+            }
+        }
         
+        // 2.2.2.Cantidad en biblioteca debeser mayor a cero
+        if (getCant_biblioteca() >= 0) {
+            throw new IOException("La cantidad en la biblioteca "
+                    + "debe ser mayor a 0");
+        }
+        
+        // 2.2.3.Cantidad disponible debe ser mayor a cero y menor o igual a 
+        // cantidad en biblioteca.
+        if (getCant_disponible() >= 0 
+                || getCant_disponible() > getCant_biblioteca()) {
+            throw new IOException("La cantidad disponible debe ser mayor "
+                    + "o igual a 0 y menor o igual a la cantidad en la "
+                    + "biblioteca");
+        }
+        String nombreArchivo = "libros.csv";
+        File archivo = new File(nombreArchivo);
+        
+        // VALIDACIÓN DEL ARCHIVO
+        if (!archivo.exists()) {
+            throw new IllegalArgumentException("El archivo no existe.");
+        }
+        
+        FileWriter archivoEscritura = new FileWriter(nombreArchivo);
+        
+        archivoEscritura.write(this.toCSV() + "\n");
+        
+        // CERRAMOS EL ARCHIVO
+        archivoEscritura.close();
     }
     
     public void EliminarLibro() {
