@@ -119,12 +119,13 @@ public class Prestamo {
         // EN ESTE PUNTO, YA SABEMOS QUE EL USUARIO Y EL LIBRO YA EXISTEN
         // AHORA DEBEMOS REALIZAR LAS VALIDACIONES
         
+        
         // AQUÍ VALIDAMOS QUE EL LIBRO TENGA COMO MÍNIMO UN EJEMPLAR //
         // AQUÍ VALIDAMOS QUE EL USUARIO DEBA ESTAR HABILTIADO PARA EL PRÉSTAMO //
         
         // UNAS VEZ GENERADA TODAS LAS VALIDACIONES
         
-        // GENERAMOS UNA INSTANCIA DE PRÉSTAMO
+        // GENERAMOS UNA INSTANCIA DE PRÉSTAMO E INSERTAMOS EN EL ARCHIVO HISTORICO
         Prestamo prestamo = new Prestamo(usuario, libro);
         // ---------------- LO QUE SE DEBE HACER A CONTINUACIÓN SE PUEDE REALIZAR DENTRO DE ÉSTE MÉTODO Ó ----------------
         // ----------------------------- DENTRO DE LA INSTANCIACIÓN DEL OBJETO -------------------------------------------
