@@ -9,7 +9,7 @@ package com.mycompany.applibreria;
  * @author Tom
  */
 public final class Libro {
-    private int ISBN;
+    private int ISBN; // DATO UNICO
     private String titulo;
     private String autor;
     private int cant_biblioteca;
@@ -21,8 +21,8 @@ public final class Libro {
         setISBN(ISBN);
         setTitulo(titulo);
         setAutor(autor);
-        setCant_biblioteca(cant_biblioteca);
-        setCant_disponible(cant_disponible);
+        setCant_biblioteca(cant_biblioteca); //DEBE SER MAYOR A CERO
+        setCant_disponible(cant_disponible); //DEBE SER MATOR A CERO Y MEJOR O IGUAL A CANTIDAD BIBLIOTECA
         setImagen(imagen);
     }
     
@@ -79,7 +79,8 @@ public final class Libro {
     }
     
     public void EliminarLibro() {
-        
+        //SI EL LIBRO EXISTE Y NO ESTÁ A ASOCIADO A NINGUN PRESTAMO ACTIVO, ELIMINAR (METODO SE UTILIZARÁ LUEGO MEDIANTE INTERFAZ GRAFICA)
+
     }
     
     public String toCSV() {

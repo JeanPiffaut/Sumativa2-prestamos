@@ -12,8 +12,8 @@ public final class Docente extends Usuario {
     private boolean magister;
     private boolean doctor;
     
-    public Docente(String RUN, String nombreCompleto,  boolean conPrestamo, boolean magister, boolean doctor) {
-        super(RUN, nombreCompleto, conPrestamo);
+    public Docente(String RUN, String nombreCompleto, char genero, String conPrestamo, boolean magister, boolean doctor) {
+        super(RUN, nombreCompleto, genero, conPrestamo);
         setMagister(magister);
         setDoctor(doctor);
     }
