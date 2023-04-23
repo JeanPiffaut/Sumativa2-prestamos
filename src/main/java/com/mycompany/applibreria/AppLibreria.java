@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -35,7 +33,7 @@ public class AppLibreria {
         //ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
         // GENERAMOS UN PRÉSTAMO
         //Prestamo prestamo = Prestamo.ingresarPrestamo(1, "1-2", libros, usuarios);
-        // AGREGAMOS EL PRÉTAMO AL ARREGLO DE PRÉSTAMOS
+        // AGREGAMOS EL PRÉTAMO AL ARREGLO DE PRÉSTAMO
         //prestamos.add(prestamo);
         // IMPRIMIMOS EL ESTADO ACTUAL DEL PRÉSTAMO
         //System.out.println(prestamo.toString());
