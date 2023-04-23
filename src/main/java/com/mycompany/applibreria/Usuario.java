@@ -12,13 +12,13 @@ public abstract class Usuario {
     private String RUN;
     private String nombreCompleto;
     private char genero;
-    private String conPrestamo;
+    private int conPrestamo;
     
-    public Usuario(String RUN, String nombreCompleto, char genero, String conPrestamo) {
+    public Usuario(String RUN, String nombreCompleto, char genero, int conPrestamo) {
         setRUN(RUN); //DATO UNICO Y SER RUT VALIDO (M11)
         setNombreCompleto(nombreCompleto);
         setGenero(genero); //M -o- F
-        setConPrestamo(conPrestamo); //NO -or- COD ISBN
+        setConPrestamo(conPrestamo); //O -o- Cod ISBN
     }
 
     public void setGenero(char genero) {
@@ -60,14 +60,14 @@ public abstract class Usuario {
     /**
      * @return the conPrestamo
      */
-    public String isConPrestamo() {
+    public int isConPrestamo() {
         return conPrestamo;
     }
 
     /**
      * @param conPrestamo the conPrestamo to set
      */
-    public void setConPrestamo(String conPrestamo) {
+    public void setConPrestamo(int conPrestamo) {
         this.conPrestamo = conPrestamo;
     }
     

@@ -12,7 +12,7 @@ public final class Estudiante extends Usuario {
     private String carrera;
     
     // GENERAMOS DATOS DE USUARIOS BASE
-    public Estudiante(String RUN, String nombreCompleto, char genero, String conPrestamo, String carrera) {
+    public Estudiante(String RUN, String nombreCompleto, char genero, int conPrestamo, String carrera) {
         super(RUN, nombreCompleto, genero,conPrestamo);
         setCarrera(carrera);
     }

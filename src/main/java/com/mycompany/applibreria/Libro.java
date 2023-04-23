@@ -14,15 +14,14 @@ public final class Libro {
     private String autor;
     private int cant_biblioteca;
     private int cant_disponible;
-    private boolean imagen;
+    private String imagen;
     
-    // DEBE COMPLETAR ESTE CONSTRUCTOR
-    public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, int cant_disponible, boolean imagen) {
+    public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, int cant_disponible, String imagen) {
         setISBN(ISBN);
         setTitulo(titulo);
         setAutor(autor);
-        setCant_biblioteca(cant_biblioteca); //DEBE SER MAYOR A CERO
-        setCant_disponible(cant_disponible); //DEBE SER MATOR A CERO Y MEJOR O IGUAL A CANTIDAD BIBLIOTECA
+        setCant_biblioteca(cant_biblioteca);
+        setCant_disponible(cant_disponible);
         setImagen(imagen);
     }
     
@@ -55,7 +54,11 @@ public final class Libro {
     }
 
     public void setCant_biblioteca(int cant_biblioteca) {
-        this.cant_biblioteca = cant_biblioteca;
+        if (cant_biblioteca > 0){
+            this.cant_biblioteca = cant_biblioteca;
+        } else {
+          throw new IllegalArgumentException("la cantidad en biblioteca para configurar el libro debe ser mayor a '0'");
+        }    
     }
 
     public int getCant_disponible() {
@@ -63,14 +66,19 @@ public final class Libro {
     }
 
     public void setCant_disponible(int cant_disponible) {
-        this.cant_disponible = cant_disponible;
+        if (cant_disponible > 0 && cant_disponible <= cant_biblioteca){
+            this.cant_disponible = cant_disponible;
+        }else{
+            throw new IllegalArgumentException("la cantidad a disponibilizar debe ser mayor a '0' y no sobrepasar los ejemplares en biblioteca");
+        }
+            
     }
 
-    public boolean isImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(boolean imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
     
@@ -86,6 +94,6 @@ public final class Libro {
     public String toCSV() {
         return getISBN() + ";" + getTitulo() + ";" + getAutor() 
                 + ";" + getCant_biblioteca() + ";" + getCant_disponible() 
-                + ";" + isImagen();
+                + ";" + getImagen();
     }
 }
