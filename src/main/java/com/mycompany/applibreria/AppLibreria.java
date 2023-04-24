@@ -116,21 +116,18 @@ public class AppLibreria {
             // OBTENGO EL VALOR DE LA LÍNEA
             String linea = lector.nextLine();
             String cortado[] = linea.split(";");
+            
             // OBTENGO EL ISBN DEL LIBRO
             int ISBN = Integer.parseInt(cortado[0]);
-            // OBTENGO EL TITULO
-            String Titulo = cortado[1];
-            // OBTENGO EL AUTOR
-            String Autor = cortado[2];
-            // OBTENGO LA CANTIDAD
-            int cantBiblioteca = Integer.parseInt(cortado[3]);
-            // OBTENGO EL DISPONIBLE
-            int cantDisponile = Integer.parseInt(cortado[4]);
-            // OBTENGO SI POSEE O NO IMAGEN
-            String Imagen = cortado[5];
+
+            String titulo = cortado[1];
+            String autor = cortado[2];
+            int cant_biblioteca = Integer.parseInt(cortado[3]);
+            int cant_disponible = Integer.parseInt(cortado[4]);
+            boolean imagen = Boolean.parseBoolean(cortado[5]);
             
-            //CREO EL OBJETO Y LO ASIGNO
-            Libro obj = new Libro(ISBN,Titulo,Autor,cantBiblioteca,cantDisponile,Imagen);
+            // DECLARO LA VARIABLE PARA GUARDAR EL USUARIO
+            Libro obj = new Libro(ISBN, titulo, autor, cant_biblioteca, cant_disponible, imagen);
             
             libros.add(obj);
         }
