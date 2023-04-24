@@ -14,14 +14,24 @@ import java.util.ArrayList;
 public abstract class Usuario {
     private String RUN;
     private String nombreCompleto;
-    private char Genero;
+    private char genero;
     private String carrera;
     private boolean conPrestamo;
     
-    public Usuario(String RUN, String nombreCompleto, boolean conPrestamo) {
-        setRUN(RUN);
+    
+    public Usuario(String RUN, String nombreCompleto, char genero, boolean conPrestamo) {
+        setRUN(RUN); //DATO UNICO Y SER RUT VALIDO (M11)
         setNombreCompleto(nombreCompleto);
-        setConPrestamo(conPrestamo);
+        setGenero(genero); //M -o- F
+        setConPrestamo(conPrestamo); //O -o- Cod ISBN
+    }
+
+    public void setGenero(char genero) {
+        this.genero = genero;
+    }
+    
+    public char getGenero() {
+        return genero;
     }
     
     /**
@@ -51,34 +61,6 @@ public abstract class Usuario {
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
-
-    /**
-     * @return the conPrestamo
-     */
-    public boolean getConPrestamo() {
-        return conPrestamo;
-    }
-
-    /**
-     * @param conPrestamo the conPrestamo to set
-     */
-    public void setConPrestamo(boolean conPrestamo) {
-        this.conPrestamo = conPrestamo;
-    } 
-
-    /**
-     * @return the Genero
-     */
-    public char getGenero() {
-        return Genero;
-    }
-
-    /**
-     * @param Genero the Genero to set
-     */
-    public void setGenero(char Genero) {
-        this.Genero = Genero;
-    }
     
         /**
      * @return the carrera
@@ -92,6 +74,20 @@ public abstract class Usuario {
      */
     public void setCarrera(String carrera) {
         this.carrera = carrera;
+    }
+    
+        /**
+     * @return the conPrestamo
+     */
+    public boolean getConPrestamo() {
+        return conPrestamo;
+    }
+
+    /**
+     * @param conPrestamo the conPrestamo to set
+     */
+    public void setConPrestamo(boolean conPrestamo) {
+        this.conPrestamo = conPrestamo;
     }
     
     public static boolean crearUsuario(Usuario user, ArrayList<Usuario> usuarios)
@@ -127,8 +123,7 @@ public abstract class Usuario {
                 System.out.println("El genero ingresado no es correcto");
                 return false;
             }
-        }
-       
+        }      
         
         usuarios.add(user);
         System.out.println("Usuario agregado correctamente");
@@ -171,10 +166,10 @@ public abstract class Usuario {
                 return false;
             }
             
-                usuario.Genero = user.getGenero();
+                usuario.genero = user.getGenero();
                 usuario.nombreCompleto = user.getNombreCompleto();
                 usuario.carrera = user.getCarrera();
-                usuario.conPrestamo = user.getConPrestamo();
+                usuario.setConPrestamo(user.getConPrestamo());
                 System.out.println("Usuario modificado correctamente");
                 return true;
             }                  
@@ -243,5 +238,5 @@ public abstract class Usuario {
         
         return getRUN() + ";" + getNombreCompleto() + ";" + getCarrera()+ ";" + getGenero() + ";" + getConPrestamo() ;
     }
-
 }
+
