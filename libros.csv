@@ -1,4 +1,4 @@
 ﻿ISBN;Titulo;Autor;Biblioteca;Disponible;Imagen
-1;Hola;Jean;5;1;SI
-2;Chao;Pipe;5;2;SI
-3;Hasta Luego;Jonathan;5;1;NO
+1;Hola;Jean;5;1;1
+2;Chao;Pipe;5;2;1
+3;Hasta Luego;Jonathan;5;1;0
