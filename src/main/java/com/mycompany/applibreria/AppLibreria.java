@@ -154,7 +154,7 @@ public class AppLibreria {
             archivoEscritura.write(linea + "\n");
         }
         // CERRAMOS EL ARCHIVO
-        archivoEscritura.close();
+        archivoEscritura.close();  
     }
     
     public static String obtenerColumnasArchivo(String nombreArchivo) throws FileNotFoundException {
