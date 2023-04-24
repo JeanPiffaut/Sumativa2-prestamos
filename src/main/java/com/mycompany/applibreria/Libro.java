@@ -4,6 +4,7 @@
  */
 package com.mycompany.applibreria;
 
+import static com.mycompany.applibreria.AppLibreria.obtenerColumnasArchivo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -89,7 +90,10 @@ public final class Libro {
         this.imagen = imagen;
     }
     
-    public void CrearLibro(ArrayList<Libro> libros) throws IOException {
+    public void CrearLibro() throws IOException {
+        String nombreArchivo = "libros.csv";
+        ArrayList<Libro> libros = AppLibreria.cargarLibros(nombreArchivo);
+        
         // 2.2.1.El ISBN debe ser único.
         for (int i = 0; i < libros.size(); i++) {
             Libro libro = libros.get(i);
@@ -112,21 +116,21 @@ public final class Libro {
                     + "o igual a 0 y menor o igual a la cantidad en la "
                     + "biblioteca");
         }
-        String nombreArchivo = "libros.csv";
-        File archivo = new File(nombreArchivo);
-        
-        // VALIDACIÓN DEL ARCHIVO
-        if (!archivo.exists()) {
-            throw new IllegalArgumentException("El archivo no existe.");
-        }
         
         FileWriter archivoEscritura = new FileWriter(nombreArchivo);
         
-        Scanner lector = new Scanner(archivo);
-        String line;
-        int count = 0;
+        // Creamos los titulos
+        String columnas = obtenerColumnasArchivo(nombreArchivo);
         
+        archivoEscritura.write(columnas + "\n");
         
+        // RECORREMOS CADA LÍNEA GUARDADA
+        for (int i = 0; i < libros.size(); i++) {
+            // OBRTENEMOS EL FORMATO CSV
+            String linea = libros.get(i).toCSV();
+            // ESCRIBIMOS EN EL ARCHIVO
+            archivoEscritura.write(linea + "\n");
+        }
         
         // CERRAMOS EL ARCHIVO
         archivoEscritura.close();
@@ -138,7 +142,7 @@ public final class Libro {
     }
     
     public String toCSV() {
-        return getISBN() + ";" + getTitulo() + ";" + getAutor() 
+        return "" + getISBN() + ";" + getTitulo() + ";" + getAutor() 
                 + ";" + getCant_biblioteca() + ";" + getCant_disponible() 
                 + ";" + getImagen();
     }
