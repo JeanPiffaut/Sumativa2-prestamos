@@ -9,28 +9,28 @@ package com.mycompany.applibreria;
  * @author Tom
  */
 public final class Docente extends Usuario {
-    private String magister;
-    private String doctor;
+    private boolean magister;
+    private boolean doctor;
     
-    public Docente(String RUN, String nombreCompleto, char genero, int conPrestamo, String magister, String doctor) {
+    public Docente(String RUN, String nombreCompleto, char genero, int conPrestamo, boolean magister, boolean doctor) {
         super(RUN, nombreCompleto, genero, conPrestamo);
         setMagister(magister);
         setDoctor(doctor);
     }
 
-    public String getMagister() {
+    public boolean isMagister() {
         return magister;
     }
 
-    public String getDoctor() {
+    public boolean isDoctor() {
         return doctor;
     }
 
-    public void setMagister(String magister) {
+    public void setMagister(boolean magister) {
         this.magister = magister;
     }
 
-    public void setDoctor(String doctor) {
+    public void setDoctor(boolean doctor) {
         this.doctor = doctor;
     }
     

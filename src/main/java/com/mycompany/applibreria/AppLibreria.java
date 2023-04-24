@@ -27,9 +27,9 @@ public class AppLibreria {
         ArrayList<Usuario> usuarios = cargarUsuarios(archivoUsuarios);
         
         //GENERAMOS DATOS DE LIBROS BASE --> OK
-        ArrayList<Libro> libros = cargarLibros(archivoLibros);
+        //rrayList<Libro> libros = cargarLibros(archivoLibros);
         
-        Libro libro = new Libro(123, "asdfasdf", "asdfa",6,6, true);
+        //Libro libro = new Libro(123, "asdfasdf", "asdfa",6,6, true);
         //libro.CrearLibro();
         
         // UN ARREGLO DE DEVOLUCIONES
@@ -44,8 +44,8 @@ public class AppLibreria {
         //Prestamo.ingresarDevolucion(1, "1-2", prestamos);
         //System.out.println("-----------------------------------------------------------");
         // IMPRIMIMOS EL ESTADO ACTUAL DEL PRÉSTAMO
-        System.out.println("USUARIOS: "+ usuarios.size());
-        System.out.println("LIBROS: " + libros.size());
+        //System.out.println("USUARIOS: "+ usuarios.size());
+        //System.out.println("LIBROS: " + libros.size());
         //guardarUsuarios(archivoUsuarios, usuarios);
     }
     
@@ -63,6 +63,8 @@ public class AppLibreria {
         
         lector.nextLine();
         // PREGUNTO SI EL ARCHIVO TIENE UNA LÍNEA SIGUIENTE
+        String run = "";
+        
         while (lector.hasNextLine()) {
             // OBTENGO EL VALOR DE LA LÍNEA
             String linea = lector.nextLine();
@@ -70,7 +72,17 @@ public class AppLibreria {
             // OBTENGO EL TIPO DE USUARIO
             String tipo = cortado[0];
             // OBTENGO EL RUN DEL USUARIO
-            String run = cortado[1];
+            
+            
+            boolean valRUN = Usuario.validarRut(cortado[1]);
+            
+            if (valRUN){
+                run = cortado[1];
+            }else{
+                throw new IllegalArgumentException("EL RUN: " + cortado[1] + " es inválido.");
+            }
+            
+            
             // OBTENGO EL NOMBRE DEL USUARIO
             String nombreCompleto = cortado[2];
             
@@ -81,11 +93,12 @@ public class AppLibreria {
             
             String carrera = cortado[5];
             
-            String magister = cortado[6];
+            boolean magister = Integer.parseInt(cortado[6]) != 0;
             
-            String doctor = cortado[7];
+            boolean doctor = Integer.parseInt(cortado[7]) !=0;
             
             Usuario obj;
+            
             if (tipo.equals("docente")) {
                 obj = new Docente(run, nombreCompleto, genero, conPrestamo, magister, doctor );
             } else {
