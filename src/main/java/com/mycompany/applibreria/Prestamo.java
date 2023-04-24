@@ -4,23 +4,30 @@
  */
 package com.mycompany.applibreria;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  *
  * @author Tom
  */
-public class Prestamo {
+public final class Prestamo {
     private Usuario usuario;
     private Libro libro;
     private GregorianCalendar fecha;
     private Devolucion devolucion;
     
-    // DEBE COMPLETAR ESTE CONSTRUCTOR
     public Prestamo(Usuario usuario, Libro libro) {
         setUsuario(usuario);
         setLibro(libro);
+        setFecha(fecha);
+        setDevolucion(devolucion);
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
     
     /**
@@ -42,13 +49,6 @@ public class Prestamo {
      */
     public Libro getLibro() {
         return libro;
-    }
-
-    /**
-     * @param libro the libro to set
-     */
-    public void setLibro(Libro libro) {
-        this.libro = libro;
     }
 
     /**
@@ -86,19 +86,7 @@ public class Prestamo {
        
         return "Estudiante";
     }
-    
-    // SOLICITO LOS PARÁMETROS DE ENTRADA DE LA DEVOLUCIÓN
-    public void asignarDevolucion() {
-        // POR AHORA SE GENERA VACIÓ PARA QUE USTED LO COMPLETE
-        Devolucion devolucion = new Devolucion();
-        // ASINGO LA DEVOLUCIÓN RESPETANDO LA RELACIÓN DE COMPOSICIÓN
-        // DEBIDO A QUE DEVOLUCIÓN SE INSTANCIÓ DENTRO DEL OBJETO Y NO POR FUERA
-        setDevolucion(devolucion);
-        // TENGO QUE HABILITAR AL USUARIO
-        // TENGO QUE AUMENTAR EL STOCK DISPONBILE Y DISMINUIR EL STOCK ASIGNADO
-        // TENGO QUE COBRAR MULTA SI ES QUE CORRESPONDE
-    }
-    
+        
     public static Prestamo ingresarPrestamo(int ISBN, String RUN, ArrayList<Libro> libros, ArrayList<Usuario> usuarios) {
         // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCARLIBRO
         Libro libro = buscarLibro(ISBN, libros);
@@ -110,45 +98,72 @@ public class Prestamo {
         
         // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCARUSUARIO
         Usuario usuario = buscarUsuario(RUN, usuarios);
-        
         // SI EL USUARIO ES NULO, ES PORQUE NO LO HE ENCONTRADO
         if (usuario == null) {
             throw new IllegalArgumentException("El usuario a buscar no existe.");
         }
-        
         // EN ESTE PUNTO, YA SABEMOS QUE EL USUARIO Y EL LIBRO YA EXISTEN
-        // AHORA DEBEMOS REALIZAR LAS VALIDACIONES
         
         // AQUÍ VALIDAMOS QUE EL LIBRO TENGA COMO MÍNIMO UN EJEMPLAR //
-        // AQUÍ VALIDAMOS QUE EL USUARIO DEBA ESTAR HABILTIADO PARA EL PRÉSTAMO //
-        
-        // UNAS VEZ GENERADA TODAS LAS VALIDACIONES
-        
-        // GENERAMOS UNA INSTANCIA DE PRÉSTAMO
-        Prestamo prestamo = new Prestamo(usuario, libro);
-        // ---------------- LO QUE SE DEBE HACER A CONTINUACIÓN SE PUEDE REALIZAR DENTRO DE ÉSTE MÉTODO Ó ----------------
-        // ----------------------------- DENTRO DE LA INSTANCIACIÓN DEL OBJETO -------------------------------------------
-        // REDUCIMOS LA CANTIDAD DISPONIBLE DEL LIBRE Y AUMENTAMOS LA CANTIDAD EN USO
-        // DEJAMOS AL USUARIO NO DISPONIBLE PARA EL NUEVO PRÉSTAMO
-        // 
-        
-        // RETORNAMOS EL PRÉSTAMO VALIDADO
-        return prestamo;
+        if(libro.getCant_disponible() > 0){
+            // AQUÍ VALIDAMOS QUE EL USUARIO DEBE ESTAR HABILITADO PARA PRÉSTAMO //
+            if (usuario.isConPrestamo() == 0){
+                    try{
+                        //TODO OK, PRESTAMOS EL LIBRO
+                        Prestamo prestamo = new Prestamo(usuario, libro);
+                        // ---------------- LO QUE SE DEBE HACER A CONTINUACIÓN SE PUEDE REALIZAR DENTRO DE ÉSTE MÉTODO Ó ----------------
+                        // ----------------------------- DENTRO DE LA INSTANCIACIÓN DEL OBJETO -------------------------------------------
+                        
+                        // SI SE INTENTA DE ARRENDAR EL MISMO USUARIO CON EL MISMO LIBRO, IMPRIMIR ALERTA //
+
+                        // REDUCIMOS LA CANTIDAD DISPONIBLE DEL LIBRO
+                        libro.setCant_disponible(libro.getCant_disponible()-1);
+                        // DEJAMOS AL USUARIO INHABILITADO PARA NUEVOS PRÉSTAMOS, ASIGNANDO EL COD ISBN AL ATRIBUTO: CONPRESTAMO
+                        usuario.setConPrestamo(libro.getISBN());
+                        // INSERTAMOS EN EL ARCHIVO HISTORICO DE PRESTAMOS CON INFO ADICIONAL (ISBN, FECHA_ACTUAL, PERIODO DE PRESTAMO AUTORIZADO, FECHA_DEVOLUCION "CALCULADA AUTO%")
+                        prestamo.setUsuario(usuario);
+                        prestamo.setLibro(libro);
+                        // IMPRIMIMOS POR PANTALLA UN VOUCHER DE ARRIENDO (FORMATO A DEFINIR)
+
+                        // RETORNAMOS EL PRÉSTAMO VALIDADO
+                        return prestamo;
+                    }catch (Exception e) {
+                        throw new IllegalArgumentException(e.getMessage());
+                    }
+            }
+        }else{
+            throw new IllegalArgumentException("El Libro sin unidades suficientes para préstamo.");
+        }
     }
     
     public static void ingresarDevolucion(int ISBN, String RUN, ArrayList<Prestamo> prestamos) {
-        // EN BASE A LA GUÍA, DEBEMOS VALIDAR QUE EXISTA EL LIBRO Y EL USUARIO
         
-        // LUEGO DEBEMOS VALIDAR QUE EL USUARIO A BUSCAR Y EL ISBN EXISTAN
+        // A PARTIR DEL ENUNCIADO:
+        // DEBEMOS VALIDAR QUE EL USUARIO A BUSCAR Y EL ISBN EXISTAN
+        
         // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCAR PRESTAMO
+        
         Prestamo prestamo = buscarPrestamo(ISBN, RUN, prestamos);
+        
         // SI EL PRÉTAMO ES NULO, ES PORQUE NO LO HE ENCONTRADO
+        
         if (prestamo == null) {
             throw new IllegalArgumentException("El prestamo a buscar no existe.");
         }
         
-        // UNA VEZ GENERADAS TODAS LAS VALIDACIONES, EJECUTAMOS EL MÉTODO ASIGNAR DEVOLUCIÓN
-        prestamo.asignarDevolucion();
+        // ASIGNO LA DEVOLUCIÓN RESPETANDO LA RELACIÓN DE COMPOSICIÓN
+        
+        Devolucion devolucion = new Devolucion();
+        // ASINGO LA DEVOLUCIÓN RESPETANDO LA RELACIÓN DE COMPOSICIÓN
+        // DEBIDO A QUE DEVOLUCIÓN SE INSTANCIÓ DENTRO DEL OBJETO Y NO POR FUERA
+        
+        // setDevolucion(devolucion);
+        
+        // HABILITAMOS AL USUARIO (CONPRESTADO = 0)
+        // DISPONIBILIZAMOS LA UNIDDAD DEL LIBRO
+        // SE DEBE DETERMINAR PLAZO DE ARRIENDO ASIGNADO POR TIPO USUARIO (10: ESTUDIANTE, 20: DOCENTE)
+        // SI LA FECHA PACTADA DE DEVOLUCION NO SE CUMPLE, SE CALCULA LA DIFERENCIA EN DIAS ENTRE FECHA DE PRESTAMO VS FECHA DE DEVOLUCION, MENOS LOS DIAS APLICADOS POR TIPO USUARIO.
+        // SE APLICARÁ MULTA DE $1.000 POR DIA DE ATRASO
     }
     
     public static Libro buscarLibro(int ISBN, ArrayList<Libro> libros) {
@@ -198,16 +213,37 @@ public class Prestamo {
                 return prestamo;
             }
         }
-        
         // SI NO LO ENCUENTRO, RETORNO UN NULL
         return null;
+    }
+    
+    public String getFechaFormateada(GregorianCalendar fecha) {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        return formatoFecha.format(fecha.getTime());
+    }
+    
+    public void generaVoucher() {
+        String voucher = 
+               "---------------------------------------------\n" +
+               "              LIBRERIA UNIVERSIDAD ANDRES BELLO   \n" +
+               "              USUARIO:  + " + usuario.getNombreCompleto() + "\n"+
+               "              ISBN: " + libro.getISBN() + "\n"+
+               "---------------------------------------------\n" +
+               "|  FECHA PRESTAMO   |  TITULO LIBRO   |  FECHA DEVOLUCION   |  TOTAL MULTA   |\n" +
+               "---------------------------------------------\n" +
+               "|  " + getFechaFormateada(getFecha()) + "   |  " + libro.getTitulo() + "   |  " + getFechaFormateada(getDevolucion()) +  "   |  $XXXXX   |\n" +
+               "---------------------------------------------\n" +
+               "                                             \n" + 
+               "                               ______________\n" + 
+               "                               FIRMA USUARIO \n\n";
+        
+        System.out.println(voucher);
     }
     
     @Override
     public String toString() {
         // GENERAMOS UN ESTADO BASE
-        String estadoBase = "Prestamo: \n" + 
-                "ISBN: " + getLibro().getISBN() + "\n" +
+        String estadoBase = "PRESTAMO\nISBN: " + getLibro().getISBN() + "\n" +
                 "RUN: " + getUsuario().getRUN() + "\n" +
                 "Arrendado por: " + obtenerTipoDeUsuario() + "\n" + 
                 "Estado: ";
