@@ -1,8 +1,8 @@
 ﻿Tipo;RUT;Nombre Completo;Genero;ISBN;Carrera;Magister;Doctor
-Docente;01-ene;Tomás S;M;0;;SI;NO
-Docente;01-feb;Fernando O;M;5;;SI;SI
-Docente;01-mar;Juan S;F;0;;SI;SI
-Estudiante;02-ene;Alberto C;F;0;Tiktoker;NO;NO
-Estudiante;02-feb;Javier E;M;0;Informatica;NO;NO
-Estudiante;02-mar;Felipe R;F;0;Veterinaria;NO;NO
-Docente;03-feb;Juan H;M;1;Historia;SI;NO
+Docente;15867722-9;Tomás S;M;0;;1;0
+Docente;19643670-7;Fernando O;M;5;;1;1
+Docente;18683943-9;Juan S;F;0;;1;1
+Estudiante;16572807-6;Alberto C;F;0;Tiktoker;0;0
+Estudiante;17395736-K;Javier E;M;0;Informatica;0;0
+Estudiante;11111111-1;Felipe R;F;0;Veterinaria;0;0
+Docente;22223222-2;Juan H;M;1;Historia;1;0
