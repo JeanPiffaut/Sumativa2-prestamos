@@ -4,6 +4,7 @@
  */
 package com.mycompany.applibreria;
 
+import static com.mycompany.applibreria.AppLibreria.obtenerColumnasArchivo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public final class Libro {
     private String autor;
     private int cant_biblioteca;
     private int cant_disponible;
-    private String imagen;
+    private boolean imagen;
     // DEBE COMPLETAR ESTE CONSTRUCTOR
     public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, 
             int cant_disponible, boolean imagen) {
@@ -81,21 +82,21 @@ public final class Libro {
             
     }
 
-    public String getImagen() {
+    public boolean getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(boolean imagen) {
         this.imagen = imagen;
     }
     
-    public void CrearLibro(ArrayList<Libro> libros) throws IOException {
+    public void CrearLibro() throws IOException {
+        String nombreArchivo = "libros.csv";
+        ArrayList<Libro> libros = AppLibreria.cargarLibros(nombreArchivo);
+        
         // 2.2.1.El ISBN debe ser único.
         for (int i = 0; i < libros.size(); i++) {
-            // VOY OBTENIENDO CADA LIBRO EN EL ARREGLO DE LIBROS
             Libro libro = libros.get(i);
-            
-            // PREGUNTO SI EL ISBN DEL LIBRO ES IGUAL AL LIBRO QUE BUSCO
             if (libro.getISBN() == getISBN()) {
                 throw new IOException("El ISBN ya existe");
             }
@@ -115,22 +116,13 @@ public final class Libro {
                     + "o igual a 0 y menor o igual a la cantidad en la "
                     + "biblioteca");
         }
-        String nombreArchivo = "libros.csv";
-        File archivo = new File(nombreArchivo);
-        
-        // VALIDACIÓN DEL ARCHIVO
-        if (!archivo.exists()) {
-            throw new IllegalArgumentException("El archivo no existe.");
-        }
         
         FileWriter archivoEscritura = new FileWriter(nombreArchivo);
         
-        Scanner lector = new Scanner(archivo);
-        String line;
+        // Creamos los titulos
+        String columnas = obtenerColumnasArchivo(nombreArchivo);
         
-        while ((line = lector.nextLine()) != null) {
-            
-        }
+        archivoEscritura.write(columnas + "\n");
         
         // RECORREMOS CADA LÍNEA GUARDADA
         for (int i = 0; i < libros.size(); i++) {
@@ -139,7 +131,6 @@ public final class Libro {
             // ESCRIBIMOS EN EL ARCHIVO
             archivoEscritura.write(linea + "\n");
         }
-        archivoEscritura.write(this.toCSV() + "\n");
         
         // CERRAMOS EL ARCHIVO
         archivoEscritura.close();
@@ -164,7 +155,7 @@ public final class Libro {
     }
     
     public String toCSV() {
-        return getISBN() + ";" + getTitulo() + ";" + getAutor() 
+        return "" + getISBN() + ";" + getTitulo() + ";" + getAutor() 
                 + ";" + getCant_biblioteca() + ";" + getCant_disponible() 
                 + ";" + getImagen();
     }
