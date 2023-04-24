@@ -16,10 +16,10 @@ public abstract class Usuario {
     private String nombreCompleto;
     private char genero;
     private String carrera;
-    private boolean conPrestamo;
+    private int conPrestamo;
     
     
-    public Usuario(String RUN, String nombreCompleto, char genero, boolean conPrestamo) {
+    public Usuario(String RUN, String nombreCompleto, char genero, int conPrestamo) {
         setRUN(RUN); //DATO UNICO Y SER RUT VALIDO (M11)
         setNombreCompleto(nombreCompleto);
         setGenero(genero); //M -o- F
@@ -79,16 +79,21 @@ public abstract class Usuario {
         /**
      * @return the conPrestamo
      */
-    public boolean getConPrestamo() {
+    
+        /**
+     * @return the conPrestamo
+     */
+    public int getConPrestamo() {
         return conPrestamo;
     }
 
     /**
      * @param conPrestamo the conPrestamo to set
      */
-    public void setConPrestamo(boolean conPrestamo) {
+    public void setConPrestamo(int conPrestamo) {
         this.conPrestamo = conPrestamo;
     }
+
     
     public static boolean crearUsuario(Usuario user, ArrayList<Usuario> usuarios)
     {
@@ -116,15 +121,9 @@ public abstract class Usuario {
                 System.out.println("El genero ingresado no es correcto");
                      
                 return false;
-            }
-            
-            if(user.getConPrestamo() == true)
-            {
-                System.out.println("El genero ingresado no es correcto");
-                return false;
-            }
+            }            
         }      
-        
+        user.setConPrestamo(0);
         usuarios.add(user);
         System.out.println("Usuario agregado correctamente");
         return true;
@@ -160,9 +159,9 @@ public abstract class Usuario {
                 return false;
             }
             
-            if(user.getConPrestamo() == true)
+            if(user.getConPrestamo() == 1)
             {
-                System.out.println("El genero ingresado no es correcto");
+                System.out.println("el usuario tiene un prestamo activo");
                 return false;
             }
             
@@ -238,5 +237,7 @@ public abstract class Usuario {
         
         return getRUN() + ";" + getNombreCompleto() + ";" + getCarrera()+ ";" + getGenero() + ";" + getConPrestamo() ;
     }
+
+
 }
 
