@@ -27,7 +27,7 @@ public class AppLibreria {
         ArrayList<Usuario> usuarios = cargarUsuarios(archivoUsuarios);
         
         //GENERAMOS DATOS DE LIBROS BASE --> OK
-        //rrayList<Libro> libros = cargarLibros(archivoLibros);
+        ArrayList<Libro> libros = cargarLibros(archivoLibros);
         
         //Libro libro = new Libro(123, "asdfasdf", "asdfa",6,6, true);
         //libro.CrearLibro();
