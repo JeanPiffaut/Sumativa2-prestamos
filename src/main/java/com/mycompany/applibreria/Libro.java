@@ -132,9 +132,22 @@ public final class Libro {
         archivoEscritura.close();
     }
     
-    public void EliminarLibro() {
+    public boolean EliminarLibro(int ISBN, ArrayList<Libro> libros) {
         //SI EL LIBRO EXISTE Y NO ESTÁ A ASOCIADO A NINGUN PRESTAMO ACTIVO, ELIMINAR (METODO SE UTILIZARÁ LUEGO MEDIANTE INTERFAZ GRAFICA)
+        
+        for(int i = 0; i < libros.size(); i++)
+        {
+            Libro libro = libros.get(i);
+            
+            if(libro.getISBN() == ISBN)
+            {
+                libros.remove(libro);
+                System.out.println("el libro "+ libro.getTitulo() +"con IBSN "+ libro.getISBN()+ " fue eliminado");
+                return true;
+            }
 
+        }
+        return true;
     }
     
     public String toCSV() {
