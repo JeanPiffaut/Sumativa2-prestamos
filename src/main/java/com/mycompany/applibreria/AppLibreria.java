@@ -29,6 +29,9 @@ public class AppLibreria {
         //GENERAMOS DATOS DE LIBROS BASE --> OK
         ArrayList<Libro> libros = cargarLibros(archivoLibros);
         
+        Libro libro = new Libro(123, "asdfasdf", "asdfa",6,6, true);
+        //libro.CrearLibro();
+        
         // UN ARREGLO DE DEVOLUCIONES
         //ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
         // GENERAMOS UN PRÉSTAMO
@@ -109,7 +112,6 @@ public class AppLibreria {
         Scanner lector = new Scanner(archivo);
         // ARREGLO PARA GUARDAR LOS LIBROS CARGADOS
         ArrayList<Libro> libros = new ArrayList<Libro>();
-        ArrayList vaLibros = new ArrayList();
         String columnas = lector.nextLine();
         // PREGUNTO SI EL ARCHIVO TIENE UNA LÍNEA SIGUIENTE
         while (lector.hasNextLine()) {
@@ -124,7 +126,7 @@ public class AppLibreria {
             String autor = cortado[2];
             int cant_biblioteca = Integer.parseInt(cortado[3]);
             int cant_disponible = Integer.parseInt(cortado[4]);
-            boolean imagen = Boolean.parseBoolean(cortado[5]);
+            boolean imagen = Integer.parseInt(cortado[5]) != 0;
             
             // DECLARO LA VARIABLE PARA GUARDAR EL USUARIO
             Libro obj = new Libro(ISBN, titulo, autor, cant_biblioteca, cant_disponible, imagen);
