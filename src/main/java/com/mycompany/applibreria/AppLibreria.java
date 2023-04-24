@@ -30,6 +30,7 @@ public class AppLibreria {
         ArrayList<Libro> libros = cargarLibros(archivoLibros);
         
         Libro libro = new Libro(123, "asdfasdf", "asdfa",6,6, true);
+        libro.EliminarLibro();
         libro.CrearLibro();
         
         // UN ARREGLO DE DEVOLUCIONES
