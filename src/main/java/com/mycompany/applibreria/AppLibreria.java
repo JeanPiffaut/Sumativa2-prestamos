@@ -29,6 +29,8 @@ public class AppLibreria {
         //GENERAMOS DATOS DE LIBROS BASE --> OK
         ArrayList<Libro> libros = cargarLibros(archivoLibros);
         
+        agregarLinea(archivoLibros, archivoLibros);
+        
         // UN ARREGLO DE DEVOLUCIONES
         //ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
         // GENERAMOS UN PRÉSTAMO
@@ -124,7 +126,7 @@ public class AppLibreria {
             String autor = cortado[2];
             int cant_biblioteca = Integer.parseInt(cortado[3]);
             int cant_disponible = Integer.parseInt(cortado[4]);
-            boolean imagen = Boolean.parseBoolean(cortado[5]);
+            boolean imagen = Integer.parseInt(cortado[5]) != 0;
             
             // DECLARO LA VARIABLE PARA GUARDAR EL USUARIO
             Libro obj = new Libro(ISBN, titulo, autor, cant_biblioteca, cant_disponible, imagen);
@@ -170,5 +172,17 @@ public class AppLibreria {
         String columnas = lector.nextLine();
         
         return columnas;
+    }
+    
+    public static void agregarLinea(String nombreArchivo, String csv_linea) throws FileNotFoundException, IOException {
+        File archivo = new File(nombreArchivo);
+        // VALIDACIÓN DEL ARCHIVO
+        if (!archivo.exists()) {
+            throw new IllegalArgumentException("El archivo no existe.");
+        }
+        
+        FileWriter archivoEscritura = new FileWriter(nombreArchivo);
+        
+        archivoEscritura.write(System.lineSeparator() + csv_linea);
     }
 }

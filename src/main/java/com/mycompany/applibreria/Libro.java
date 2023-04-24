@@ -20,7 +20,7 @@ public final class Libro {
     private String autor;
     private int cant_biblioteca;
     private int cant_disponible;
-    private String imagen;
+    private boolean imagen;
     // DEBE COMPLETAR ESTE CONSTRUCTOR
     public Libro(int ISBN, String titulo, String autor, int cant_biblioteca, 
             int cant_disponible, boolean imagen) {
@@ -81,21 +81,18 @@ public final class Libro {
             
     }
 
-    public String getImagen() {
+    public boolean getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(boolean imagen) {
         this.imagen = imagen;
     }
     
     public void CrearLibro(ArrayList<Libro> libros) throws IOException {
         // 2.2.1.El ISBN debe ser único.
         for (int i = 0; i < libros.size(); i++) {
-            // VOY OBTENIENDO CADA LIBRO EN EL ARREGLO DE LIBROS
             Libro libro = libros.get(i);
-            
-            // PREGUNTO SI EL ISBN DEL LIBRO ES IGUAL AL LIBRO QUE BUSCO
             if (libro.getISBN() == getISBN()) {
                 throw new IOException("El ISBN ya existe");
             }
@@ -127,19 +124,9 @@ public final class Libro {
         
         Scanner lector = new Scanner(archivo);
         String line;
+        int count = 0;
         
-        while ((line = lector.nextLine()) != null) {
-            
-        }
         
-        // RECORREMOS CADA LÍNEA GUARDADA
-        for (int i = 0; i < libros.size(); i++) {
-            // OBRTENEMOS EL FORMATO CSV
-            String linea = libros.get(i).toCSV();
-            // ESCRIBIMOS EN EL ARCHIVO
-            archivoEscritura.write(linea + "\n");
-        }
-        archivoEscritura.write(this.toCSV() + "\n");
         
         // CERRAMOS EL ARCHIVO
         archivoEscritura.close();
