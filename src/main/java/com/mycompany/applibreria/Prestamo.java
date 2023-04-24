@@ -4,6 +4,8 @@
  */
 package com.mycompany.applibreria;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -153,33 +155,57 @@ public final class Prestamo {
         return null;
     }
     
-    public static void ingresarDevolucion(int ISBN, String RUN, ArrayList<Prestamo> prestamos) {
+    public void ingresarDevolucion(int ISBN, String RUN, ArrayList<Prestamo> prestamos) throws FileNotFoundException, IOException {
         
         // A PARTIR DEL ENUNCIADO:
         // DEBEMOS VALIDAR QUE EL USUARIO A BUSCAR Y EL ISBN EXISTAN
+        ArrayList<Usuario> usuarios = AppLibreria.cargarUsuarios("usuarios.csv");
+        Usuario usuario = buscarUsuario(RUN, usuarios);
         
         // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCAR PRESTAMO
-        
         Prestamo prestamo = buscarPrestamo(ISBN, RUN, prestamos);
         
         // SI EL PRÉTAMO ES NULO, ES PORQUE NO LO HE ENCONTRADO
-        
         if (prestamo == null) {
             throw new IllegalArgumentException("El prestamo a buscar no existe.");
         }
         
         // ASIGNO LA DEVOLUCIÓN RESPETANDO LA RELACIÓN DE COMPOSICIÓN
-        
-        Devolucion devolucion = new Devolucion();
+        Devolucion devolucion = new Devolucion(ISBN,RUN,0);
         // ASINGO LA DEVOLUCIÓN RESPETANDO LA RELACIÓN DE COMPOSICIÓN
         // DEBIDO A QUE DEVOLUCIÓN SE INSTANCIÓ DENTRO DEL OBJETO Y NO POR FUERA
-        
-        // setDevolucion(devolucion);
+        setDevolucion(devolucion);
         
         // HABILITAMOS AL USUARIO (CONPRESTADO = 0)
+        usuario.setConPrestamo(0);
+        
         // DISPONIBILIZAMOS LA UNIDDAD DEL LIBRO
+        int cant_dispo = getLibro().getCant_disponible() + 1;
+        getLibro().setCant_disponible(cant_dispo);
+        
         // SE DEBE DETERMINAR PLAZO DE ARRIENDO ASIGNADO POR TIPO USUARIO (10: ESTUDIANTE, 20: DOCENTE)
+        String tipo_usuario = obtenerTipoDeUsuario();
+        int dias_prestamo;
+        if (tipo_usuario == "Docente") {
+            dias_prestamo = 20;
+        } else {
+            dias_prestamo = 10;
+        }
+                
         // SI LA FECHA PACTADA DE DEVOLUCION NO SE CUMPLE, SE CALCULA LA DIFERENCIA EN DIAS ENTRE FECHA DE PRESTAMO VS FECHA DE DEVOLUCION, MENOS LOS DIAS APLICADOS POR TIPO USUARIO.
+        Date fecha_prestamo = getFecha().getTime();
+        Date fecha_devolucion = getFechaDevolucion().getTime();
+
+        // Calcular la diferencia en milisegundos entre las dos fechas
+        long diffInMilliseconds = Math.abs(fecha_devolucion.getTime() - fecha_prestamo.getTime());
+
+        // Convertir la diferencia en milisegundos a días
+        int diffInDays = (int) (diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+        // Comparar la diferencia en días con la cantidad de días almacenada en otra variable
+        if (diffInDays <= dias_prestamo) {
+            int atraso = dias_prestamo - diffInDays;
+        }
         // SE APLICARÁ MULTA DE $1.000 POR DIA DE ATRASO
     }
     
