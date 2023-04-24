@@ -6,6 +6,7 @@ package com.mycompany.applibreria;
 
 import static com.mycompany.applibreria.AppLibreria.obtenerColumnasArchivo;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public final class Libro {
         String nombreArchivo = "libros.csv";
         ArrayList<Libro> libros = AppLibreria.cargarLibros(nombreArchivo);
         
+        
         // 2.2.1.El ISBN debe ser único.
         for (int i = 0; i < libros.size(); i++) {
             Libro libro = libros.get(i);
@@ -117,23 +119,11 @@ public final class Libro {
                     + "biblioteca");
         }
         
-        FileWriter archivoEscritura = new FileWriter(nombreArchivo);
+        // Agregamos el libro seteado
+        libros.add(this);
         
-        // Creamos los titulos
-        String columnas = obtenerColumnasArchivo(nombreArchivo);
-        
-        archivoEscritura.write(columnas + "\n");
-        
-        // RECORREMOS CADA LÍNEA GUARDADA
-        for (int i = 0; i < libros.size(); i++) {
-            // OBRTENEMOS EL FORMATO CSV
-            String linea = libros.get(i).toCSV();
-            // ESCRIBIMOS EN EL ARCHIVO
-            archivoEscritura.write(linea + "\n");
-        }
-        
-        // CERRAMOS EL ARCHIVO
-        archivoEscritura.close();
+        // Hacemos el cambio en el excel
+        guardarLibros(libros);
     }
     
     public boolean EliminarLibro(int ISBN, ArrayList<Libro> libros) {
@@ -154,9 +144,29 @@ public final class Libro {
         return true;
     }
     
+    private void guardarLibros(ArrayList<Libro> libros) throws FileNotFoundException, IOException {
+        String nombreArchivo = "libros.csv";
+        String columnas = obtenerColumnasArchivo(nombreArchivo);
+        // GENERAMOS UN NUEVO ARCHIVO PARA IR GUARDANDO DATOS, ADEMAS DEBEMOS VALIDAR DUPLICIDAD 
+        FileWriter archivoEscritura = new FileWriter(nombreArchivo);
+        // ESCRIBIMOS EN EL ARCHIVO LAS COLUMNAS
+        archivoEscritura.write(columnas + "\n");
+        
+        // RECORREMOS CADA LÍNEA GUARDADA
+        for (int i = 0; i < libros.size(); i++) {
+            // OBRTENEMOS EL FORMATO CSV
+            String linea = libros.get(i).toCSV();
+            // ESCRIBIMOS EN EL ARCHIVO
+            archivoEscritura.write(linea + "\n");
+        }
+       
+        // CERRAMOS EL ARCHIVO
+        archivoEscritura.close();  
+    }
+    
     public String toCSV() {
         return "" + getISBN() + ";" + getTitulo() + ";" + getAutor() 
                 + ";" + getCant_biblioteca() + ";" + getCant_disponible() 
-                + ";" + getImagen();
+                + ";" + (getImagen() ? 1 : 0);
     }
 }
