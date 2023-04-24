@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -19,27 +19,31 @@ import java.util.Scanner;
  */
 public class AppLibreria {
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        // NOMBRE DE LOS ARCHIVOS
+        //NOMBRE DE ARCHIVOS
         final String archivoUsuarios    = "usuarios.csv";
         final String archivoLibros      = "libros.csv";
-        // GENERAMOS DATOS DE USUARIOS BASE
+        
+        //GENERAMOS DATOS DE USUARIOS BASE --> OK
         ArrayList<Usuario> usuarios = cargarUsuarios(archivoUsuarios);
-        // GENERAMOS DATOS DE LIBROS BASE
+        
+        //GENERAMOS DATOS DE LIBROS BASE --> OK
         ArrayList<Libro> libros = cargarLibros(archivoLibros);
+        
         // UN ARREGLO DE DEVOLUCIONES
-        ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
+        //ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
         // GENERAMOS UN PRÉSTAMO
-        Prestamo prestamo = Prestamo.ingresarPrestamo(1, "1-2", libros, usuarios);
-        // AGREGAMOS EL PRÉTAMO AL ARREGLO DE PRÉSTAMOS
-        prestamos.add(prestamo);
-        // IMPRIMIMOS EL ESTADO ACTUAL DEL PRÉSTAMO
-        System.out.println(prestamo.toString());
-        // GENERAMOS UNA DEVOLUCION
-        //Prestamo.ingresarDevolucion(1, "1-2", prestamos);
-        System.out.println("-----------------------------------------------------------");
+        //Prestamo prestamo = Prestamo.ingresarPrestamo(1, "1-2", libros, usuarios);
+        // AGREGAMOS EL PRÉTAMO AL ARREGLO DE PRÉSTAMO
+        //prestamos.add(prestamo);
         // IMPRIMIMOS EL ESTADO ACTUAL DEL PRÉSTAMO
         //System.out.println(prestamo.toString());
-        guardarUsuarios(archivoUsuarios, usuarios);
+        // GENERAMOS UNA DEVOLUCION
+        //Prestamo.ingresarDevolucion(1, "1-2", prestamos);
+        //System.out.println("-----------------------------------------------------------");
+        // IMPRIMIMOS EL ESTADO ACTUAL DEL PRÉSTAMO
+        System.out.println("USUARIOS: "+ usuarios.size());
+        System.out.println("LIBROS: " + libros.size());
+        //guardarUsuarios(archivoUsuarios, usuarios);
     }
     
     public static ArrayList<Usuario> cargarUsuarios(String nombreArchivo) throws FileNotFoundException {
@@ -66,20 +70,23 @@ public class AppLibreria {
             String run = cortado[1];
             // OBTENGO EL NOMBRE DEL USUARIO
             String nombreCompleto = cortado[2];
+            
+            char genero = cortado[3].charAt(0);
+            //System.out.println(genero);
             // OBTENGO EL ISBN DEL USUARIO
-            int conPrestamo = Integer.parseInt(cortado[3]);
-            // DDECLARO LA VARIABLE PARA GUARDAR EL USUARIO
-            String carrera = cortado[4];
+            int conPrestamo = Integer.parseInt(cortado[4]);
             
-            boolean magister = cortado[5];
+            String carrera = cortado[5];
             
-            boolean doctor = cortado[6];
+            String magister = cortado[6];
+            
+            String doctor = cortado[7];
             
             Usuario obj;
-            if (tipo == "docente") {
-                obj = new Docente(run, nombreCompleto, conPrestamo, carrera, magister, doctor );
+            if (tipo.equals("docente")) {
+                obj = new Docente(run, nombreCompleto, genero, conPrestamo, magister, doctor );
             } else {
-                obj = new Estudiante(run, nombreCompleto, conPrestamo);
+                obj = new Estudiante(run, nombreCompleto, genero, conPrestamo, carrera);
             }
             usuarios.add(obj);
         }
@@ -87,11 +94,12 @@ public class AppLibreria {
         // CERRAMOS EL ARCHIVO PARA LIBERAR MEMORIA
         lector.close();
         
+        //DEBEMOS VALIDAE USUARIOS DUPLICADOS ANTES DE RETORNAR
         return usuarios;
     }
     
     public static ArrayList<Libro> cargarLibros(String nombreArchivo) throws FileNotFoundException {
-         // CARGAMOS EL ARCHIVO EN MEMORIA
+        // CARGAMOS EL ARCHIVO EN MEMORIA
         File archivo = new File(nombreArchivo);
         // VALIDACIÓN DEL ARCHIVO
         if (!archivo.exists()) {
@@ -101,7 +109,7 @@ public class AppLibreria {
         Scanner lector = new Scanner(archivo);
         // ARREGLO PARA GUARDAR LOS LIBROS CARGADOS
         ArrayList<Libro> libros = new ArrayList<Libro>();
-        
+        ArrayList vaLibros = new ArrayList();
         String columnas = lector.nextLine();
         // PREGUNTO SI EL ARCHIVO TIENE UNA LÍNEA SIGUIENTE
         while (lector.hasNextLine()) {
@@ -110,20 +118,33 @@ public class AppLibreria {
             String cortado[] = linea.split(";");
             // OBTENGO EL ISBN DEL LIBRO
             int ISBN = Integer.parseInt(cortado[0]);
-            // DDECLARO LA VARIABLE PARA GUARDAR EL USUARIO
-            Libro obj = new Libro(ISBN);
+            // OBTENGO EL TITULO
+            String Titulo = cortado[1];
+            // OBTENGO EL AUTOR
+            String Autor = cortado[2];
+            // OBTENGO LA CANTIDAD
+            int cantBiblioteca = Integer.parseInt(cortado[3]);
+            // OBTENGO EL DISPONIBLE
+            int cantDisponile = Integer.parseInt(cortado[4]);
+            // OBTENGO SI POSEE O NO IMAGEN
+            String Imagen = cortado[5];
+            
+            //CREO EL OBJETO Y LO ASIGNO
+            Libro obj = new Libro(ISBN,Titulo,Autor,cantBiblioteca,cantDisponile,Imagen);
             
             libros.add(obj);
         }
+        
         // CERRAMOS EL ARCHIVO PARA LIBERAR MEMORIA
         lector.close();
         
+        //DEBEMOS VALIDAR LIBROS DUPLICADOS ANTES DE RETORNAR
         return libros;
     }
     
     public static void guardarUsuarios(String nombreArchivo, ArrayList<Usuario> usuarios) throws FileNotFoundException, IOException {
         String columnas = obtenerColumnasArchivo(nombreArchivo);
-        // GENERAMOS UN NUEVO ARCHIVO PARA IR GUARDANDO DATOS
+        // GENERAMOS UN NUEVO ARCHIVO PARA IR GUARDANDO DATOS, ADEMAS DEBEMOS VALIDAR DUPLICIDAD 
         FileWriter archivoEscritura = new FileWriter(nombreArchivo);
         // ESCRIBIMOS EN EL ARCHIVO LAS COLUMNAS
         archivoEscritura.write(columnas + "\n");
