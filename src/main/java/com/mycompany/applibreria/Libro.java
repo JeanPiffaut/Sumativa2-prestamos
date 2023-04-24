@@ -126,7 +126,7 @@ public final class Libro {
         guardarLibros(libros);
     }
     
-    public boolean EliminarLibro(int ISBN, ArrayList<Libro> libros) {
+    public boolean EliminarLibro(int ISBN, ArrayList<Libro> libros) throws IOException {
         //SI EL LIBRO EXISTE Y NO ESTÁ A ASOCIADO A NINGUN PRESTAMO ACTIVO, ELIMINAR (METODO SE UTILIZARÁ LUEGO MEDIANTE INTERFAZ GRAFICA)
         
         for(int i = 0; i < libros.size(); i++)
@@ -141,6 +141,8 @@ public final class Libro {
             }
 
         }
+        
+        guardarLibros(libros);
         return true;
     }
     
