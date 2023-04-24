@@ -11,12 +11,22 @@ package com.mycompany.applibreria;
 public abstract class Usuario {
     private String RUN;
     private String nombreCompleto;
-    private boolean conPrestamo;
+    private char genero;
+    private int conPrestamo;
     
-    public Usuario(String RUN, String nombreCompleto, boolean conPrestamo) {
-        setRUN(RUN);
+    public Usuario(String RUN, String nombreCompleto, char genero, int conPrestamo) {
+        setRUN(RUN); //DATO UNICO Y SER RUT VALIDO (M11)
         setNombreCompleto(nombreCompleto);
-        setConPrestamo(conPrestamo);
+        setGenero(genero); //M -o- F
+        setConPrestamo(conPrestamo); //O -o- Cod ISBN
+    }
+
+    public void setGenero(char genero) {
+        this.genero = genero;
+    }
+    
+    public char getGenero() {
+        return genero;
     }
     
     /**
@@ -50,14 +60,14 @@ public abstract class Usuario {
     /**
      * @return the conPrestamo
      */
-    public boolean isConPrestamo() {
+    public int isConPrestamo() {
         return conPrestamo;
     }
 
     /**
      * @param conPrestamo the conPrestamo to set
      */
-    public void setConPrestamo(boolean conPrestamo) {
+    public void setConPrestamo(int conPrestamo) {
         this.conPrestamo = conPrestamo;
     }
     
@@ -66,5 +76,9 @@ public abstract class Usuario {
         // 1-1;Tomás S;1
         
         return getRUN() + ";" + getNombreCompleto();
+    }
+    
+    public void eliminarUsuario(){
+        //SI EL USUARIO EXISTE Y NO TIENE PRESTAMOS ACTIVOS, ELIMINAR (METODO SE UTILIZARÁ LUEGO MEDIANTE INTERFAZ GRAFICA)
     }
 }
