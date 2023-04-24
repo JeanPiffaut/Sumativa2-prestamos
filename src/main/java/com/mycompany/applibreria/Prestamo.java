@@ -6,6 +6,7 @@ package com.mycompany.applibreria;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -70,6 +71,20 @@ public final class Prestamo {
      */
     public Devolucion getDevolucion() {
         return devolucion;
+    }
+    
+    public GregorianCalendar getFechaDevolucion() {
+        GregorianCalendar fecha_prestamo = getFecha();
+        String tipo = obtenerTipoDeUsuario();
+        int dias = 0;
+        if (tipo == "Docente") {
+            dias = 20;
+        } else {
+            dias = 10;
+        }
+                
+        fecha_prestamo.add(Calendar.DATE, dias);
+        return fecha_prestamo;
     }
 
     /**
@@ -233,7 +248,7 @@ public final class Prestamo {
                "---------------------------------------------\n" +
                "|  FECHA PRESTAMO   |  TITULO LIBRO   |  FECHA DEVOLUCION   |  TOTAL MULTA   |\n" +
                "---------------------------------------------\n" +
-               "|  " + getFechaFormateada(getFecha()) + "   |  " + libro.getTitulo() + "   |  " + getFechaFormateada(getDevolucion()) +  "   |  $XXXXX   |\n" +
+               "|  " + getFechaFormateada(getFecha()) + "   |  " + libro.getTitulo() + "   |  " + getFechaFormateada(getFechaDevolucion()) +  "   |  $XXXXX   |\n" +
                "---------------------------------------------\n" +
                "                                             \n" + 
                "                               ______________\n" + 
