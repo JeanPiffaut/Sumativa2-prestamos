@@ -107,7 +107,7 @@ public final class Prestamo {
         // AQUÍ VALIDAMOS QUE EL LIBRO TENGA COMO MÍNIMO UN EJEMPLAR //
         if(libro.getCant_disponible() > 0){
             // AQUÍ VALIDAMOS QUE EL USUARIO DEBE ESTAR HABILITADO PARA PRÉSTAMO //
-            if (usuario.isConPrestamo() == 0){
+            if (usuario.getConPrestamo() == 0){
                     try{
                         //TODO OK, PRESTAMOS EL LIBRO
                         Prestamo prestamo = new Prestamo(usuario, libro);
@@ -134,6 +134,8 @@ public final class Prestamo {
         }else{
             throw new IllegalArgumentException("El Libro sin unidades suficientes para préstamo.");
         }
+        
+        return null;
     }
     
     public static void ingresarDevolucion(int ISBN, String RUN, ArrayList<Prestamo> prestamos) {
