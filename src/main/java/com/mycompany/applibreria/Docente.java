@@ -9,43 +9,30 @@ package com.mycompany.applibreria;
  * @author Tom
  */
 public final class Docente extends Usuario {
-    private boolean magister;
-    private boolean doctor;
+    private String magister;
+    private String doctor;
     
-    public Docente(String RUN, String nombreCompleto,  boolean conPrestamo, boolean magister, boolean doctor) {
-        super(RUN, nombreCompleto, conPrestamo);
+    public Docente(String RUN, String nombreCompleto, char genero, int conPrestamo, String magister, String doctor) {
+        super(RUN, nombreCompleto, genero, conPrestamo);
         setMagister(magister);
         setDoctor(doctor);
     }
-    /**
-     * @return the magister
-     */
-    public boolean isMagister() {
+
+    public String getMagister() {
         return magister;
     }
 
-    /**
-     * @param magister the magister to set
-     */
-    public void setMagister(boolean magister) {
-        this.magister = magister;
-    }
-
-    /**
-     * @return the doctor
-     */
-    public boolean isDoctor() {
+    public String getDoctor() {
         return doctor;
     }
 
-    /**
-     * @param doctor the doctor to set
-     */
-    public void setDoctor(boolean doctor) {
+    public void setMagister(String magister) {
+        this.magister = magister;
+    }
+
+    public void setDoctor(String doctor) {
         this.doctor = doctor;
     }
-    
-    
     
     @Override
     public String toCSV() {
